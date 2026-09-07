@@ -6,50 +6,553 @@
 
     <title>Agro Opportunity</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>Agro Opportunity</h1>
-        <p>Location-Based Agricultural Intelligence</p>
-    </header>
+    <!-- NAVBAR -->
+    <nav class="navbar">
 
-    <main>
+        <div class="logo">
+            <div class="logo-icon">A</div>
 
-        <section id="location-section">
+            <div class="logo-text">
+                <h2>Agro Opportunity</h2>
+                <span>Agricultural Intelligence</span>
+            </div>
+        </div>
 
-            <h2>Choose Your Location</h2>
+        <div class="nav-links">
+            <a href="#how-it-works">How it works</a>
+            <a href="#categories">Markets</a>
+            <a href="#analyze">Analyze</a>
+        </div>
 
-            <input
-                type="text"
-                id="location"
-                placeholder="Enter city, state or region"
-            >
+        <a href="#analyze" class="nav-button">
+            Explore Market
+        </a>
 
-            <button id="locationBtn">
-                Analyze Location
-            </button>
-
-        </section>
+    </nav>
 
 
-        <section id="results-section">
+    <!-- HERO -->
+    <section class="hero">
 
-            <h2>Market Opportunity</h2>
+        <div class="hero-content">
 
-            <div id="results">
+            <div class="hero-badge">
+                Location-Based Agricultural Intelligence
+            </div>
+
+            <h1>
+                Discover where
+                <span>agricultural demand</span>
+                becomes opportunity.
+            </h1>
+
+            <p>
+                Analyze livestock and farm produce consumption by location,
+                identify supply gaps, and uncover promising agribusiness
+                opportunities in local markets.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#analyze" class="primary-button">
+                    Analyze a Location
+                </a>
+
+                <a href="#how-it-works" class="secondary-button">
+                    See How It Works
+                </a>
+
+            </div>
+
+            <div class="hero-mini-stats">
+
+                <div>
+                    <strong>Location</strong>
+                    <span>Market-based analysis</span>
+                </div>
+
+                <div>
+                    <strong>Demand</strong>
+                    <span>Consumption estimates</span>
+                </div>
+
+                <div>
+                    <strong>Opportunity</strong>
+                    <span>Market gap discovery</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+            <div class="dashboard-preview">
+
+                <div class="preview-top">
+
+                    <div>
+                        <span class="small-label">
+                            MARKET OVERVIEW
+                        </span>
+
+                        <h3>Abuja, Nigeria</h3>
+                    </div>
+
+                    <div class="live-pill">
+                        Active
+                    </div>
+
+                </div>
+
+
+                <div class="preview-highlight">
+
+                    <span>
+                        Top Opportunity
+                    </span>
+
+                    <h2>Poultry & Eggs</h2>
+
+                    <p>
+                        Strong estimated demand with notable local supply gap.
+                    </p>
+
+                    <div class="score-row">
+
+                        <div>
+                            <span>Opportunity Score</span>
+                            <strong>89</strong>
+                        </div>
+
+                        <div>
+                            <span>Demand Level</span>
+                            <strong>High</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="market-list">
+
+                    <div class="market-item">
+
+                        <div>
+                            <span class="market-dot"></span>
+
+                            <div>
+                                <strong>Eggs</strong>
+                                <small>Livestock Produce</small>
+                            </div>
+                        </div>
+
+                        <span class="market-score">
+                            92
+                        </span>
+
+                    </div>
+
+
+                    <div class="market-item">
+
+                        <div>
+                            <span class="market-dot"></span>
+
+                            <div>
+                                <strong>Chicken</strong>
+                                <small>Livestock</small>
+                            </div>
+                        </div>
+
+                        <span class="market-score">
+                            88
+                        </span>
+
+                    </div>
+
+
+                    <div class="market-item">
+
+                        <div>
+                            <span class="market-dot"></span>
+
+                            <div>
+                                <strong>Tomatoes</strong>
+                                <small>Farm Produce</small>
+                            </div>
+                        </div>
+
+                        <span class="market-score">
+                            81
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MARKET STRIP -->
+    <section class="market-strip">
+
+        <p>
+            Analyze opportunities across
+        </p>
+
+        <div class="market-tags">
+
+            <span>Livestock</span>
+            <span>Poultry</span>
+            <span>Fishery</span>
+            <span>Grains</span>
+            <span>Vegetables</span>
+            <span>Tubers</span>
+            <span>Fruits</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section" id="how-it-works">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                HOW IT WORKS
+            </span>
+
+            <h2>
+                From location to business insight.
+            </h2>
+
+            <p>
+                Agro Opportunity transforms location and consumption data
+                into practical agricultural market intelligence.
+            </p>
+
+        </div>
+
+
+        <div class="steps-grid">
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    01
+                </div>
+
+                <h3>Select a Location</h3>
 
                 <p>
-                    Enter a location to begin analysis.
+                    Enter a city, state, region, or local market area you want
+                    to analyze.
                 </p>
 
             </div>
 
-        </section>
 
-    </main>
+            <div class="step-card">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>Estimate Consumption</h3>
+
+                <p>
+                    The platform evaluates estimated consumption across
+                    livestock and agricultural products.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>Measure Market Gaps</h3>
+
+                <p>
+                    Demand is compared against available supply to reveal
+                    possible shortages.
+                </p>
+
+            </div>
+
+
+            <div class="step-card">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>Find Opportunities</h3>
+
+                <p>
+                    Products are ranked to highlight potential farming,
+                    distribution, processing, and supply opportunities.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="categories-section" id="categories">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                AGRICULTURAL MARKETS
+            </span>
+
+            <h2>
+                Explore major consumption categories.
+            </h2>
+
+        </div>
+
+
+        <div class="category-grid">
+
+            <div class="category-card large-card">
+
+                <div class="category-label">
+                    LIVESTOCK
+                </div>
+
+                <h3>
+                    Animal & livestock markets
+                </h3>
+
+                <p>
+                    Analyze consumption and market opportunities in meat,
+                    poultry, eggs, milk, fish, and other animal products.
+                </p>
+
+                <div class="category-items">
+                    <span>Chicken</span>
+                    <span>Eggs</span>
+                    <span>Beef</span>
+                    <span>Fish</span>
+                </div>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <div class="category-label">
+                    CROPS
+                </div>
+
+                <h3>
+                    Staple food markets
+                </h3>
+
+                <p>
+                    Understand demand for grains, legumes, tubers, and other
+                    staple agricultural products.
+                </p>
+
+                <div class="category-items">
+                    <span>Rice</span>
+                    <span>Maize</span>
+                    <span>Beans</span>
+                </div>
+
+            </div>
+
+
+            <div class="category-card">
+
+                <div class="category-label">
+                    FRESH PRODUCE
+                </div>
+
+                <h3>
+                    Fruits & vegetables
+                </h3>
+
+                <p>
+                    Identify opportunities created by fresh produce demand
+                    and local supply shortages.
+                </p>
+
+                <div class="category-items">
+                    <span>Tomatoes</span>
+                    <span>Onions</span>
+                    <span>Pepper</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ANALYZE SECTION -->
+    <section class="analysis-section" id="analyze">
+
+        <div class="analysis-container">
+
+            <div class="analysis-info">
+
+                <span class="section-tag light-tag">
+                    START ANALYSIS
+                </span>
+
+                <h2>
+                    What does your market consume?
+                </h2>
+
+                <p>
+                    Enter a location to begin building a local agricultural
+                    consumption and opportunity profile.
+                </p>
+
+                <div class="analysis-points">
+
+                    <div>
+                        <span>✓</span>
+                        Local consumption estimates
+                    </div>
+
+                    <div>
+                        <span>✓</span>
+                        Agricultural demand analysis
+                    </div>
+
+                    <div>
+                        <span>✓</span>
+                        Supply gap detection
+                    </div>
+
+                    <div>
+                        <span>✓</span>
+                        Business opportunity ranking
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="analysis-form">
+
+                <label for="location">
+                    Enter location
+                </label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="e.g. Abuja, Nigeria"
+                    >
+
+                    <button id="locationBtn">
+                        Analyze
+                    </button>
+
+                </div>
+
+
+                <button
+                    id="geoBtn"
+                    class="geo-button"
+                >
+                    Use my current location
+                </button>
+
+
+                <div id="results">
+
+                    <div class="empty-result">
+
+                        <span class="result-icon">
+                            ⌖
+                        </span>
+
+                        <h3>
+                            Market analysis starts here
+                        </h3>
+
+                        <p>
+                            Enter a location above to begin exploring
+                            agricultural consumption and opportunities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="footer-logo">
+
+            <div class="logo-icon">
+                A
+            </div>
+
+            <div>
+                <strong>
+                    Agro Opportunity
+                </strong>
+
+                <span>
+                    Agricultural Intelligence
+                </span>
+            </div>
+
+        </div>
+
+
+        <p>
+            Discover demand. Identify gaps. Find opportunity.
+        </p>
+
+    </footer>
+
 
     <script src="app.js"></script>
 
