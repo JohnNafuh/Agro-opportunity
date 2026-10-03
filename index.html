@@ -126,9 +126,9 @@
                         Top Opportunity
                     </span>
 
-                    <h2>Poultry & Eggs</h2>
+                    <h2 id="heroTop">Poultry &amp; Eggs</h2>
 
-                    <p>
+                    <p id="heroSummary">
                         Strong estimated demand with notable local supply gap.
                     </p>
 
@@ -136,12 +136,12 @@
 
                         <div>
                             <span>Opportunity Score</span>
-                            <strong>89</strong>
+                            <strong id="heroScore">89</strong>
                         </div>
 
                         <div>
                             <span>Demand Level</span>
-                            <strong>High</strong>
+                            <strong id="heroDemand">High</strong>
                         </div>
 
                     </div>
@@ -149,7 +149,7 @@
                 </div>
 
 
-                <div class="market-list">
+                <div class="market-list" id="heroList">
 
                     <div class="market-item">
 
@@ -480,9 +480,13 @@
                         type="text"
                         id="location"
                         placeholder="e.g. Abuja, Nigeria"
+                        list="stateList"
+                        autocomplete="off"
                     >
 
-                    <button id="locationBtn">
+                    <datalist id="stateList"></datalist>
+
+                    <button id="locationBtn" type="button">
                         Analyze
                     </button>
 
@@ -491,13 +495,14 @@
 
                 <button
                     id="geoBtn"
+                    type="button"
                     class="geo-button"
                 >
                     Use my current location
                 </button>
 
 
-                <div id="results">
+                <div id="results" aria-live="polite">
 
                     <div class="empty-result">
 
@@ -554,7 +559,8 @@
     </footer>
 
 
-    <script src="app.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
