@@ -19,6 +19,7 @@ const SIZE_WEIGHT = 40;       // points given to market size
 
 let currentState = null;
 let currentCategory = "all";
+let pendingCategory = "all";   // tab to open after the next analysis
 let currentNote = "";
 
 
@@ -459,7 +460,8 @@ function renderResults() {
 function showState(stateName, note) {
 
     currentState = stateName;
-    currentCategory = "all";
+    currentCategory = pendingCategory;
+    pendingCategory = "all";
     currentNote = note || "";
 
     renderResults();
@@ -698,3 +700,286 @@ geoBtn.addEventListener(
 
 fillStateList();
 fillHeroCard();
+
+
+
+/* ---------- CATEGORY POP-UP ---------- */
+
+const modal = document.getElementById("categoryModal");
+const modalContent = document.getElementById("modalContent");
+const modalClose = document.getElementById("modalClose");
+
+const CATEGORY_INFO = {
+    livestock: {
+        title: "Animal & livestock markets",
+        text: "Meat, poultry, eggs, milk and fish."
+    },
+    crops: {
+        title: "Staple food markets",
+        text: "Grains, legumes and tubers."
+    },
+    fresh: {
+        title: "Fruits & vegetables",
+        text: "Fresh produce that spoils fast, so local supply matters."
+    }
+};
+
+let scrollAfterClose = false;
+
+function ordinal(number) {
+
+    const mod100 = number % 100;
+
+    if (mod100 >= 11 && mod100 <= 13) return number + "th";
+
+    const suffix = { 1: "st", 2: "nd", 3: "rd" }[number % 10] || "th";
+
+    return number + suffix;
+}
+
+function demandRank(product, stateName) {
+
+    const mine = demandFor(stateName, product);
+
+    return 1 + Object.keys(STATES).filter(function(name) {
+        return demandFor(name, product) > mine;
+    }).length;
+}
+
+// States that grow more than they eat: places to buy from
+function surplusStates(product, excludeName) {
+
+    return Object.keys(STATES)
+        .filter(function(name) {
+            return name !== excludeName && coverageFor(name, product) > 1;
+        })
+        .map(function(name) {
+            return {
+                name: name,
+                tonnes: demandFor(name, product) * (coverageFor(name, product) - 1)
+            };
+        })
+        .sort(function(a, b) {
+            return b.tonnes - a.tonnes;
+        })
+        .slice(0, 3);
+}
+
+function formatKg(kg) {
+    return kg < 10 ? kg.toFixed(1) : String(Math.round(kg));
+}
+
+function categoryHtml(categoryId) {
+
+    const info = CATEGORY_INFO[categoryId];
+
+    const stateName = currentState || "FCT";
+    const isSample = !currentState;
+
+    const rows = analyzeState(stateName).filter(function(row) {
+        return row.product.category === categoryId;
+    });
+
+    const top = rows[0];
+    const covered = rows[rows.length - 1];
+
+    const total = Object.keys(STATES).length;
+    const rank = demandRank(top.product, stateName);
+    const lowerName = top.product.name.toLowerCase();
+
+    const insights = [];
+
+    insights.push(
+        `<strong>Biggest gap: ${top.product.name}.</strong> ${supplySentence(top)}`
+    );
+
+    insights.push(
+        `Among the 36 states and the FCT, demand for ${lowerName} here ranks ${ordinal(rank)} of ${total}.`
+    );
+
+    const sources = surplusStates(top.product, stateName);
+
+    if (sources.length) {
+
+        insights.push(
+            `Strong ${lowerName} producers to source from: ${sources.map(function(item) {
+                return stateLabel(item.name);
+            }).join(", ")}.`
+        );
+
+    } else {
+
+        insights.push(
+            `No state shows a clear ${lowerName} surplus in these estimates, so the gap may need imports or new production.`
+        );
+    }
+
+    if (rows.length > 1 && covered !== top) {
+
+        const how = covered.coverage >= 1
+            ? "local farms already produce more than is eaten"
+            : `about ${Math.round(covered.coverage * 100)}% supplied locally`;
+
+        insights.push(
+            `Best covered here: ${covered.product.name} (${how}), so expect more competition.`
+        );
+    }
+
+    const typical = rows.slice().sort(function(a, b) {
+        return PRODUCTS.indexOf(a.product) - PRODUCTS.indexOf(b.product);
+    }).map(function(row) {
+        return `<span>${row.product.name} ${formatKg(row.product.perCapita)} kg</span>`;
+    }).join("");
+
+    return `
+        <span class="small-label">${CATEGORIES[categoryId].toUpperCase()}</span>
+
+        <h3 id="modalTitle">${info.title}</h3>
+
+        <p class="modal-intro">${info.text}</p>
+
+        <p class="modal-state">
+            ${isSample
+                ? `Sample view: ${stateLabel(stateName)}. Analyze your own location to see it for your area.`
+                : `Showing ${stateLabel(stateName)}.`}
+        </p>
+
+        <ul class="modal-insights">
+            ${insights.map(function(text) {
+                return `<li>${text}</li>`;
+            }).join("")}
+        </ul>
+
+        <div class="result-rows">
+            ${rows.map(rowHtml).join("")}
+        </div>
+
+        <p class="modal-typical-title">Typical national consumption per person, per year</p>
+
+        <div class="modal-typical">${typical}</div>
+
+        <button
+            type="button"
+            class="modal-action"
+            data-modal-action="analyze"
+            data-category="${categoryId}"
+        >
+            ${currentState
+                ? `Show ${CATEGORIES[categoryId].toLowerCase()} in my results`
+                : "Analyze my location"}
+        </button>
+
+        <p class="result-note">
+            Estimates, not survey data.
+        </p>
+    `;
+}
+
+function openCategory(categoryId) {
+
+    if (!modal || !CATEGORY_INFO[categoryId]) return;
+
+    modalContent.innerHTML = categoryHtml(categoryId);
+
+    modalContent.scrollTop = 0;
+
+    document.body.style.overflow = "hidden";
+
+    if (typeof modal.showModal === "function") {
+        modal.showModal();
+    } else {
+        modal.setAttribute("open", "");
+    }
+}
+
+function closeCategory() {
+
+    if (!modal) return;
+
+    if (typeof modal.close === "function") {
+        modal.close();
+    } else {
+        modal.removeAttribute("open");
+        document.body.style.overflow = "";
+    }
+}
+
+if (modal) {
+
+    const grid = document.querySelector(".category-grid");
+
+    if (grid) {
+
+        grid.addEventListener("click", function(event) {
+
+            const card = event.target.closest(".category-card");
+
+            if (card) openCategory(card.dataset.category);
+
+        });
+
+        grid.addEventListener("keydown", function(event) {
+
+            if (event.key !== "Enter" && event.key !== " ") return;
+
+            const card = event.target.closest(".category-card");
+
+            if (!card) return;
+
+            event.preventDefault();
+
+            openCategory(card.dataset.category);
+
+        });
+    }
+
+    modalClose.addEventListener("click", closeCategory);
+
+    // tap on the dimmed area outside the sheet
+    modal.addEventListener("click", function(event) {
+
+        if (event.target === modal) closeCategory();
+
+    });
+
+    modalContent.addEventListener("click", function(event) {
+
+        const button = event.target.closest("[data-modal-action]");
+
+        if (!button) return;
+
+        const categoryId = button.dataset.category;
+
+        pendingCategory = categoryId;
+
+        if (currentState) {
+            currentCategory = categoryId;
+            pendingCategory = "all";
+            renderResults();
+        }
+
+        scrollAfterClose = true;
+
+        closeCategory();
+
+    });
+
+    modal.addEventListener("close", function() {
+
+        document.body.style.overflow = "";
+
+        if (!scrollAfterClose) return;
+
+        scrollAfterClose = false;
+
+        // wait for the browser to hand focus back before scrolling
+        setTimeout(function() {
+
+            const target = document.getElementById("analyze");
+
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        }, 60);
+
+    });
+}

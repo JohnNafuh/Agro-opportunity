@@ -344,7 +344,7 @@
 
         <div class="category-grid">
 
-            <div class="category-card large-card">
+            <div class="category-card large-card" data-category="livestock" role="button" tabindex="0" aria-haspopup="dialog">
 
                 <div class="category-label">
                     LIVESTOCK
@@ -366,10 +366,12 @@
                     <span>Fish</span>
                 </div>
 
+                <span class="category-more">See market details</span>
+
             </div>
 
 
-            <div class="category-card">
+            <div class="category-card" data-category="crops" role="button" tabindex="0" aria-haspopup="dialog">
 
                 <div class="category-label">
                     CROPS
@@ -390,10 +392,12 @@
                     <span>Beans</span>
                 </div>
 
+                <span class="category-more">See market details</span>
+
             </div>
 
 
-            <div class="category-card">
+            <div class="category-card" data-category="fresh" role="button" tabindex="0" aria-haspopup="dialog">
 
                 <div class="category-label">
                     FRESH PRODUCE
@@ -414,11 +418,29 @@
                     <span>Pepper</span>
                 </div>
 
+                <span class="category-more">See market details</span>
+
             </div>
 
         </div>
 
     </section>
+
+
+    <!-- CATEGORY POP-UP -->
+    <dialog id="categoryModal" class="category-modal" aria-labelledby="modalTitle">
+
+        <div class="modal-body">
+
+            <button type="button" class="modal-close" id="modalClose" aria-label="Close">
+                &times;
+            </button>
+
+            <div id="modalContent"></div>
+
+        </div>
+
+    </dialog>
 
 
     <!-- ANALYZE SECTION -->
